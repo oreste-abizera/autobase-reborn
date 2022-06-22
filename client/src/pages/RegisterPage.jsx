@@ -1,7 +1,7 @@
-import React from "react";
+import AuthLayout from "../layouts/AuthLayout";
 
 const RegisterPage = () => {
-  return <div>RegisterPage</div>;
+  return <AuthLayout>RegisterPage</AuthLayout>;
 };
 
 export default RegisterPage;
