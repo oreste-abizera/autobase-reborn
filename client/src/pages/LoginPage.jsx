@@ -22,12 +22,12 @@ const LoginPage = () => {
         </div>
         <div className={styles.auth__card}>
           <div className={styles.auth__card__header}>
-            <h3>Admin Area</h3>
+            <h3>Login Panel</h3>
           </div>
           <div className={styles.auth__card__body}>
             <form>
               <div className={styles.auth__card__form__group}>
-                <input type="text" id="username" placeholder="Username" />
+                <input type="email" id="email" placeholder="Email" />
               </div>
               <div className={styles.auth__card__form__group}>
                 <input type="password" id="password" placeholder="Password" />
@@ -39,7 +39,6 @@ const LoginPage = () => {
                   alignItems: "center",
                 }}
               >
-                {/* <div className={styles.auth__card__form__checkbox}></div> */}
                 <input
                   type="checkbox"
                   className={styles.auth__card__form__checkbox}
