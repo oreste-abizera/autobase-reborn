@@ -2,8 +2,37 @@ import AuthLayout from "../layouts/AuthLayout";
 import styles from "../styles/AuthLayout.module.css";
 import { Link } from "react-router-dom";
 import logo from "../logo.svg";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  const { isLoggedIn, handleRegister } = useContext(AppContext) || {};
+  const navigate = useNavigate();
+  const [state, setState] = useState({
+    username: "",
+    password: "",
+    names: "",
+    email: "",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setState({
+      ...state,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleRegister(state);
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn]);
   return (
     <AuthLayout>
       <div>
@@ -25,12 +54,33 @@ const RegisterPage = () => {
             <h3>Registration Panel</h3>
           </div>
           <div className={styles.auth__card__body}>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className={styles.auth__card__form__group}>
-                <input type="text" id="names" placeholder="Full Names" />
+                <input
+                  type="text"
+                  id="names"
+                  placeholder="Full Names"
+                  name="names"
+                  onChange={handleInputChange}
+                />
               </div>
               <div className={styles.auth__card__form__group}>
-                <input type="email" id="email" placeholder="Email" />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className={styles.auth__card__form__group}>
+                <input
+                  type="text"
+                  id="username"
+                  placeholder="Username"
+                  name="username"
+                  onChange={handleInputChange}
+                />
               </div>
               <div className={styles.auth__card__form__group}>
                 <input
@@ -38,6 +88,8 @@ const RegisterPage = () => {
                   id="password"
                   placeholder="Password"
                   autoComplete="new-password"
+                  name="password"
+                  onChange={handleInputChange}
                 />
               </div>
               <div className={styles.auth__card__form__group__submit}>

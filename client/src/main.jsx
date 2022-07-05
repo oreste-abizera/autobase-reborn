@@ -32,10 +32,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         },
       }}
     />
-    <AppContextProvider>
-      <Router>
+    <Router>
+      <AppContextProvider>
         <App />
-      </Router>
-    </AppContextProvider>
+      </AppContextProvider>
+    </Router>
   </React.StrictMode>
 );

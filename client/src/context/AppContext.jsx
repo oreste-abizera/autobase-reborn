@@ -2,6 +2,7 @@ import axios from "axios";
 import url from "../helpers/url";
 import { createContext, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 // create a new context file for the app
 const AppContext = createContext();
@@ -20,6 +21,7 @@ const syncUserToSessionStorage = (user) => {
 };
 
 const AppContextProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     user: getUserFromSessionStorage(),
     isLoggedIn: false,
@@ -52,13 +54,22 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
-  const handleRegister = (user) => {
-    setState({
-      ...state,
-      user,
-      isLoggedIn: true,
-    });
-    syncUserToSessionStorage(user);
+  const handleRegister = async ({ username, password, names, email }) => {
+    try {
+      let response = await axios.post(url + "/auth/register", {
+        username,
+        password,
+        names,
+        email,
+      });
+      if (response.data.success) {
+        toast.success("Registration successful");
+        navigate("/");
+      }
+    } catch (error) {
+      handleError(error.response.data.message);
+      toast.error(error.response.data.message || "Something went wrong");
+    }
   };
 
   const handleLogout = () => {
